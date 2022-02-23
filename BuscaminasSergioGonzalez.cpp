@@ -14,8 +14,6 @@ using std::ifstream; using std::vector;
 
 #define aux '.'
 #define SIMBOLO_MINA '*'
-#define COLUMNAS 4
-#define FILAS 4
 
 //Inicializa mi tablero
 void iniciarTablero(char tablero[FILAS][COLUMNAS]) {
