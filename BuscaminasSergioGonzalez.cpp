@@ -1,12 +1,21 @@
 #include <stdio.h>   
 #include <stdlib.h>  
 #include <unistd.h>  
+#include <fstream>
+#include <string>
+#include <cstring>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+using std::cout; using std::cerr;
+using std::endl; using std::string;
+using std::ifstream; using std::vector;
+
 #define aux '.'
 #define SIMBOLO_MINA '*'
-//Aqui se pueden modificar los datos de entrada, como el numero de filas y columnas
-#define COLUMNAS 7
-#define FILAS 7
-
+#define COLUMNAS 4
+#define FILAS 4
 
 //Inicializa mi tablero
 void iniciarTablero(char tablero[FILAS][COLUMNAS]) {
@@ -28,15 +37,6 @@ void colocarMina(int fila, int columna, char tablero[FILAS][COLUMNAS]) {
   tablero[fila][columna] = SIMBOLO_MINA;
 }
 
-// Colocar minas aleatoriamente en mi tablero
-void colocarMinasAleatoriamente(char tablero[FILAS][COLUMNAS]) {
-  int l;
-  for (l = 0; l < 7; l++) {
-    int fila = NumeroAleatorio(0, FILAS - 1);
-    int columna = NumeroAleatorio(0, COLUMNAS - 1);
-    colocarMina(fila, columna, tablero);
-  }
-}
 
 // Convertir a char
 char Conversion(int numero) {
@@ -98,12 +98,37 @@ void MostrarTablero(char tablero[FILAS][COLUMNAS]) {
   }
 }
 
-int main() {
-	int F=0, C=0;
+
+int main(int argc, char *argv[]) {
+
+	if (argc==1)
+    {
+        printf("Debes ingresar mas parametros...\n");
+        return 1;
+    }
+    
+    ifstream archivo;
+    string texto;
+	archivo.open(argv[1],ios::in); 
+	
+	if(archivo.fail()){
+		cout<<"No se pudo abrir el archivo";
+		exit(1);
+	}	
+	
+	while(!archivo.eof()){
+		getline(archivo,texto);
+		cout<<texto<<endl;
+	}
+	archivo.close();
 	char tablero[FILAS][COLUMNAS];
 	srand(getpid());
 	iniciarTablero(tablero);
-	colocarMinasAleatoriamente(tablero);
+	colocarMina(0, 0, tablero);
+    colocarMina(2, 1, tablero);
+	cout<<endl;
 	MostrarTablero(tablero);
 	return 0;
 }
+
+
